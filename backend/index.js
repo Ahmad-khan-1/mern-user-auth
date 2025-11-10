@@ -13,7 +13,13 @@ app.get("/ping", (req, res) => {
 });
 
 app.use(express.json());
-app.use(cors());
+// ✅ Allow CORS for your frontend origin
+app.use(cors({
+  origin: ["http://localhost:3000", "https://your-frontend-domain.vercel.app"], // add your domains
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use("/auth", AuthRouter);
 app.use("/products", ProductRouter);
 

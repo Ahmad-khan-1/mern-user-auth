@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleError, handleSuccess } from "../utils";
 import { ToastContainer } from "react-toastify";
-import "./Home.css";
+
 function Home() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [products, setProducts] = useState([]);
@@ -12,26 +12,30 @@ function Home() {
     setLoggedInUser(localStorage.getItem("loggedInUser"));
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
     localStorage.removeItem("token");
     localStorage.removeItem("loggedInUser");
     handleSuccess("User logged out");
-    setTimeout(() => navigate("/login"), 1000);
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
   };
 
   const fetchProducts = async () => {
     try {
-      const url = "https://mern-user-auth-mu.vercel.app/products";
-      const response = await fetch(url, {
-        headers: { Authorization: localStorage.getItem("token") },
-      });
+      const url = "http://localhost:8080/products";
+      const headers = {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      };
 
-      const result = await response.json();
+      const response = await fetch(url, headers);
+      const result = await response.json;
       console.log(result);
-      setProducts(result.products || []);
+      setProducts(result);
     } catch (err) {
-      handleError("Failed to fetch products");
-      console.error(err);
+      handleError(err);
     }
   };
 

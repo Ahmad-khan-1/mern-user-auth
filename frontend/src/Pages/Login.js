@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../utils";
+import { useState } from "react";
 
 function Login() {
   const [loginInfo, setLoginInfo] = useState({
@@ -14,7 +14,10 @@ function Login() {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setLoginInfo({ ...loginInfo, [name]: value });
+    console.log(name, value);
+    const copyLoginInfo = { ...loginInfo };
+    copyLoginInfo[name] = value;
+    setLoginInfo(copyLoginInfo);
   };
 
   // Handle form submit
@@ -27,8 +30,7 @@ function Login() {
     }
 
     try {
-      // ✅ Local backend URL instead of Vercel
-      const url = "https://mern-user-auth-mu.vercel.app/auth/login"; // change port if needed
+      const url = "http://localhost:8080/auth/login"; // change port if needed
 
       const response = await fetch(url, {
         method: "POST",
@@ -45,19 +47,18 @@ function Login() {
         handleSuccess(message);
         localStorage.setItem("token", jwtToken);
         localStorage.setItem("loggedInUser", name);
-
-        setTimeout(() => navigate("/home"), 1000);
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       } else if (error) {
-        const details = error?.details?.[0]?.message;
-        handleError(details || "Something went wrong");
-      } else {
-        handleError(message || "Login failed");
+        const details = error?.details[0].message;
+        handleError(details);
+      } else if (!success) {
+        handleError(message);
       }
-
       console.log(result);
     } catch (err) {
-      handleError("Network error or server not running");
-      console.error(err);
+      handleError(err);
     }
   };
 
@@ -99,4 +100,3 @@ function Login() {
 }
 
 export default Login;
-

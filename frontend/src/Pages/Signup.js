@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess } from "../utils";
+import { useState } from "react";
 
 function Signup() {
   const [signupInfo, setSignupInfo] = useState({
@@ -14,7 +14,10 @@ function Signup() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setSignupInfo({ ...signupInfo, [name]: value });
+    console.log(name, value);
+    const copySignupInfo = { ...signupInfo };
+    copySignupInfo[name] = value;
+    setSignupInfo(copySignupInfo);
   };
 
   const handleSignup = async (e) => {
@@ -26,8 +29,7 @@ function Signup() {
     }
 
     try {
-      // ✅ Use your local backend instead of Vercel
-      const url = "https://mern-user-auth-mu.vercel.app/auth/signup"; // change 8080 if your backend runs on another port
+      const url = "http://localhost:8080/auth/signup"; // change 8080 if your backend runs on another port
 
       const response = await fetch(url, {
         method: "POST",
@@ -42,18 +44,19 @@ function Signup() {
 
       if (success) {
         handleSuccess(message);
-        setTimeout(() => navigate("/login"), 1000);
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       } else if (error) {
-        const details = error?.details?.[0]?.message;
-        handleError(details || "Something went wrong");
-      } else {
-        handleError(message || "Signup failed");
+        const details = error?.details[0].message;
+        handleError(details);
+      } else if (!success) {
+        handleError(message);
       }
 
       console.log(result);
     } catch (err) {
-      handleError("Network error or server not running");
-      console.error(err);
+      handleError(err);
     }
   };
 
@@ -67,9 +70,9 @@ function Signup() {
             onChange={handleChange}
             type="text"
             name="name"
+            autoFocus
             placeholder="Enter your name..."
             value={signupInfo.name}
-            autoFocus
           />
         </div>
 

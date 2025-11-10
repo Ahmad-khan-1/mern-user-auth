@@ -1,0 +1,99 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  font-size: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #444;
+  font-weight: 500;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    #74ebd5,
+    #acb6e5
+  ); /* modern gradient background */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 32px 48px;
+  border-radius: 12px; /* subtle modern rounding */
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* softer shadow */
+}
+
+.container > h1 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #333; /* modern dark gray */
+  font-weight: 600;
+  text-align: center;
+}
+
+.container > form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.container div {
+  display: flex;
+  flex-direction: column;
+}
+
+.container input {
+  width: 100%;
+  font-size: 20px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #ccc; /* modern subtle underline */
+  transition: border-color 0.3s ease;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container input:focus {
+  border-color: #7b5cf6; /* purple accent on focus */
+}
+
+.container input::placeholder {
+  font-size: 12px;
+  font-style: italic;
+  color: #999;
+}
+
+button {
+  background-color: #7b5cf6; /* modern purple */
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  border-radius: 6px; /* slightly rounded corners */
+  padding: 10px;
+  cursor: pointer;
+  margin: 10px 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #684cd5;
+  transform: translateY(-2px);
+}

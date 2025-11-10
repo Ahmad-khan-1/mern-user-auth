@@ -28,7 +28,7 @@ function Login() {
 
     try {
       // ✅ Local backend URL instead of Vercel
-      const url = "http://localhost:8080/auth/login"; // change port if needed
+      const url = "https://mern-user-auth-mu.vercel.app/auth/login"; // change port if needed
 
       const response = await fetch(url, {
         method: "POST",
